@@ -44,7 +44,7 @@ export function GeneratePromptPayQRCode({className, ...props}: React.ComponentPr
             <div className="flex size-8 items-center justify-center rounded-md border">
               <QrCode className="size-6" />
             </div>
-            <h1 className="text-xl font-bold">Generate Promptpay QRCode</h1>
+            <h1 className="text-xl font-bold">Promptpay QRCode</h1>
           </div>
 
           {/* Input section */}
