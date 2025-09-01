@@ -27,7 +27,6 @@ export function GeneratePromptPayQRCode({className, ...props}: React.ComponentPr
     // Validation
     if (phone === "") return toast.error("กรุณากรอกเบอร์มือถือ")
     if (!isValidPhoneNumber(phone)) return toast.error("เบอร์มือถือไม่ถูกต้อง")
-    
     // Fetch
     const res = await axios.post("/api/generate-qr", {phone, amount})
     console.log(res)
@@ -51,11 +50,31 @@ export function GeneratePromptPayQRCode({className, ...props}: React.ComponentPr
           <div className="flex flex-col gap-6">
             <div className="grid gap-3">
               <Label htmlFor="phone">เบอร์มือถือ</Label>
-              <Input id="phone" type="text" placeholder="0812345678" onChange={(e) => setPhone(e.target.value)}/>
+              <Input 
+                id="phone" 
+                type="text" 
+                placeholder="0812345678" 
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="amount">จำนวนเงิน</Label>
-              <Input id="amount" type="number" placeholder="199.99" onChange={(e) => setAmount(Number(e.target.value))}/>
+              <Input 
+                id="amount" 
+                type="number" 
+                placeholder="199.99"
+                value={amount}
+                onChange={(e) => {
+                  const raw = e.target.value
+                  const value = Number(raw)
+
+                  if (raw === "") {
+                    setAmount("" as unknown as number) // ให้กล่อง input ว่างได้
+                  } else {
+                    setAmount(value < 1 ? 1 : value)
+                  }
+                }}
+              />
             </div>
             <Button className="w-full cursor-pointer" onClick={() => generateQRCode()}>
               สร้าง QRCode
